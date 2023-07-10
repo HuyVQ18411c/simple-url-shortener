@@ -1,0 +1,31 @@
+version: "3.7"
+services:
+  web-server:
+    image: node:18
+    working_dir: /app/
+    environment:
+      APP_PORT: 3005
+      DATABASE_HOST: db
+      DATABASE_PORT: 3306
+      DATABASE_PASSWORD: FB66c57VK
+      DATABASE_USERNAME: root
+    volumes:
+      - .:/app
+    ports:
+      - "3005:3005"
+    command: "npm run start:dev"
+    depends_on:
+      - db
+  db:
+    image: mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: FB66c57VK
+    ports:
+      - "3306:3306"
+
+  nginx:
+    build: ./nginx
+    ports:
+    - '80:80'
+    depends_on:
+    - web-server

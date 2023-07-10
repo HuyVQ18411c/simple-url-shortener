@@ -1,0 +1,36 @@
+{
+  "name": "simple-url-shortener",
+  "version": "1.0.0",
+  "description": "URL shortener with System Design",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/app.js",
+    "start:dev": "nodemon ./src/app.js",
+    "typeorm": "npx typeorm -d ./src/database/datasource.js",
+    "makemigration": "npm run typeorm -- migration:generate",
+    "migrate": "npm run typeorm -- migration:run",
+    "downgrade": "npm run typeorm -- migration:revert"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/HuyVQ18411c/simple-url-shortener.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/HuyVQ18411c/simple-url-shortener/issues"
+  },
+  "homepage": "https://github.com/HuyVQ18411c/simple-url-shortener#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "hbs": "^4.2.0",
+    "mysql2": "^3.5.0",
+    "typeorm": "^0.3.17"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

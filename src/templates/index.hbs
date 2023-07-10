@@ -1,0 +1,100 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./styles/styles.css">
+    <title>Simple shorten URL</title>
+  </head>
+  <body>
+    <h1>URL Shortener</h1>
+    <div class="flex-container">
+      <form id="shortenForm" method="POST">
+        <label for="shortenLink">Your link:</label>
+        <input type="text" id="shortenLink" name="shortenLink"/>
+        <input type="submit" role="button" value="Shorten">
+      </form>
+      <div style="display: none; color: red;" id="message"></div>
+      <div id="shortenedLink" style="display: none;">
+        Your shortened link: <span style="text-decoration: underline; color:#0d6efd"></span>
+      </div>
+    </div>
+    <footer>
+      Let's make something free. Copyright
+      <a href="https://github.com/HuyVQ18411c">Huy Quang Vu</a>
+      ©
+      {{currentDate}}
+    </footer>
+    <script>
+      const shortenForm = document.getElementById("shortenForm");
+      const message = document.getElementById("message");
+      const shortenedLink = document.getElementById("shortenedLink");
+      const linkDisplayer = shortenedLink.getElementsByTagName('span')[0];
+      
+      const blankURLMessage = "Shorten link can not be blank.";
+      const invalidURLMessage = "Invalid URL detected. Please input valid URL.";
+      const unknownErrorMessage = "Failed to shorten URL. Please try again."
+      const successfulMessage = "Successful. Your link is delivered."
+
+      const pattern = /https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/;
+
+      function displayMessage(element, message, isError){
+        if(isError){
+          element.style.color = 'red';
+        }
+        else{
+          element.style.color = 'green'
+        }
+
+        element.innerText = message;
+        element.style.display = "inline";
+        setTimeout(() => {
+          element.style.display = "none";
+        }, 5000);
+      }
+
+      function isBlank(value){
+        if(value === '' || value === undefined || value === null){
+          return true;
+        }
+        return false;
+      }
+
+      async function getShortenedLink(link){
+        const response = await fetch('/shorten', {
+          method: "POST",
+          mode: "cors",
+          cache: "no-cache",
+          credentials: "same-origin",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({shortenLink: link})
+        });
+
+        const data = await response.json();
+        return data;
+      }
+
+      shortenForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const formData = new FormData(shortenForm);
+        const re = new RegExp(pattern);
+        const shortenLink = formData.get('shortenLink');
+        if(isBlank(shortenLink)){
+          displayMessage(message, blankURLMessage, true);
+          return;
+        }
+        else if(!shortenLink.match(re)){
+          displayMessage(message, invalidURLMessage, true);
+          return;
+        }
+        const data = await getShortenedLink(shortenLink);
+        if(data.shortenedLink){
+          shortenedLink.style.display = "block";
+          linkDisplayer.innerText = data.shortenedLink;
+          displayMessage(message, successfulMessage, false);
+        }
+      });
+    </script>
+  </body>
+</html>
