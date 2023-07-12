@@ -5,6 +5,11 @@ html {
     "Noto Color Emoji";
 }
 
+body {
+  margin: 0;
+  padding: 0;
+}
+
 button,
 [role="button"] {
   cursor: pointer;
@@ -21,10 +26,21 @@ input {
 
 a {
   color: #0d6efd;
+  text-decoration: none;
 }
 
 a:visited {
   color: #0d6efd;
+}
+
+a:hover {
+  background-color: #0d6efd;
+  color: #ffffff;
+}
+
+.container {
+  margin: 0 auto;
+  width: 95%;
 }
 
 .flex-container {
@@ -32,4 +48,34 @@ a:visited {
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.btn-primary {
+  background-color: #0d6efd;
+  color: #ffffff;
+}
+
+.btn-primary:hover {
+  background-color: #3a89ff;
+}
+
+.navbar {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  background-color: aliceblue;
+}
+
+.navbar li {
+  display: inline-block;
+}
+
+.navbar a {
+  display: block;
+  padding: 16px 32px;
+}
+
+.active {
+  background-color: #0d6efd;
+  color: #ffffff;
 }

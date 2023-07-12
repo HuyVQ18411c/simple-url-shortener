@@ -6,29 +6,31 @@
     <title>Simple shorten URL</title>
   </head>
   <body>
-    <h1>URL Shortener</h1>
-    <div class="flex-container">
-      <form id="shortenForm" method="POST">
-        <label for="shortenLink">Your link:</label>
-        <input type="text" id="shortenLink" name="shortenLink"/>
-        <input type="submit" role="button" value="Shorten">
-      </form>
-      <div style="display: none; color: red;" id="message"></div>
-      <div id="shortenedLink" style="display: none;">
-        Your shortened link: <span style="text-decoration: underline; color:#0d6efd"></span>
+    {{> navigation}}
+    <div class="container">
+      <div class="flex-container">
+        <h1>URL Shortener</h1>
+        <form id="shortenForm" method="POST">
+          <label for="shortenLink">Your link:</label>
+          <input type="text" id="shortenLink" name="shortenLink"/>
+          <input type="submit" class="btn-primary" role="button" value="Shorten">
+        </form>
+        <div style="display: none; color: red;" id="message"></div>
+        <div id="shortenedLink" style="display: none;">
+          Your shortened link: <span style="text-decoration: underline; color:#0d6efd" id="txtShortenedLink"></span>
+          <button role="button" class="btn-primary" id="btnCopyLink">Copy link</button>
+        </div>
       </div>
+      {{> footer}}
     </div>
-    <footer>
-      Let's make something free. Copyright
-      <a href="https://github.com/HuyVQ18411c">Huy Quang Vu</a>
-      ©
-      {{currentDate}}
-    </footer>
     <script>
       const shortenForm = document.getElementById("shortenForm");
       const message = document.getElementById("message");
       const shortenedLink = document.getElementById("shortenedLink");
       const linkDisplayer = shortenedLink.getElementsByTagName('span')[0];
+      const btnCopyLink = document.getElementById('btnCopyLink');
+      const txtShortenedLink = document.getElementById('txtShortenedLink');
+      const navbar = document.querySelector('.navbar');
       
       const blankURLMessage = "Shorten link can not be blank.";
       const invalidURLMessage = "Invalid URL detected. Please input valid URL.";
@@ -59,8 +61,11 @@
         return false;
       }
 
+      window.addEventListener('load', (event) => {
+      });
+
       async function getShortenedLink(link){
-        const response = await fetch('/shorten', {
+        const response = await fetch('/shortener', {
           method: "POST",
           mode: "cors",
           cache: "no-cache",
@@ -94,6 +99,10 @@
           linkDisplayer.innerText = data.shortenedLink;
           displayMessage(message, successfulMessage, false);
         }
+      });
+
+      btnCopyLink.addEventListener('click', (event) => {
+        navigator.clipboard.writeText(txtShortenedLink.innerText);
       });
     </script>
   </body>
