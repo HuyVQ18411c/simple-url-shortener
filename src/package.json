@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node ./src/app.js",
-    "start:dev": "nodemon ./src/app.js",
-    "typeorm": "npx typeorm -d ./src/database/datasource.js",
+    "start": "node ./app.js",
+    "start:dev": "nodemon ./app.js",
+    "typeorm": "npx typeorm -d ./database/datasource.js",
     "makemigration": "npm run typeorm -- migration:generate",
     "migrate": "npm run typeorm -- migration:run",
     "downgrade": "npm run typeorm -- migration:revert"

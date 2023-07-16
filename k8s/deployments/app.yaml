@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: shortener
+spec:
+  selector:
+    matchLabels:
+      app: shortener
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: shortener
+    spec:
+      restartPolicy: Always
+      containers:
+      - name: web-server
+        imagePullPolicy: Never
+        image: simple-url-shortener-web-server:latest
+        ports:
+        - containerPort: 3005
+        env:
+        - name: APP_SHORTEN_DOMAIN
+          value: http://localhost
+        - name: APP_PORT
+          value: "3005"
+        - name: DATABASE_HOST
+          value: mysql-db
+        - name: DATABASE_PORT
+          value: "3306"
+        - name: DATABASE_PASSWORD
+          value: FB66c57VK
+        - name: DATABASE_USERNAME
+          value: root
