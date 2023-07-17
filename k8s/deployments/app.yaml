@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: shortener
+  name: web-server
 spec:
   selector:
     matchLabels:
-      app: shortener
+      app: web-server
   replicas: 1
   template:
     metadata:
       labels:
-        app: shortener
+        app: web-server
     spec:
       restartPolicy: Always
       containers:
@@ -32,3 +32,4 @@ spec:
           value: FB66c57VK
         - name: DATABASE_USERNAME
           value: root
+          
