@@ -29,7 +29,12 @@ spec:
         - name: DATABASE_PORT
           value: "3306"
         - name: DATABASE_PASSWORD
-          value: FB66c57VK
+          valueFrom:
+            secretKeyRef:
+              name: web-server-secrets
+              key: db-password
         - name: DATABASE_USERNAME
-          value: root
-          
+          valueFrom:
+            secretKeyRef:
+              name: web-server-secrets
+              key: db-user
